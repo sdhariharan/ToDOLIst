@@ -16,7 +16,7 @@ function formatDate(dateString) {
   }
 }
 
-export function TaskItem({ task }) {
+export function TaskItem({ task, onEdit, onDelete }) {
   const statusClass = `badge-status badge-status-${task.status?.toLowerCase() || 'pending'}`;
   const priorityClass = `badge-priority badge-priority-${task.priority?.toLowerCase() || 'medium'}`;
 
@@ -51,6 +51,29 @@ export function TaskItem({ task }) {
             <span className="meta-label">Updated:</span>
             <span className="meta-value">{formatDate(task.updatedAt)}</span>
           </div>
+        )}
+      </div>
+
+      <div className="task-card-footer">
+        {onEdit && (
+          <button
+            type="button"
+            className="btn-action btn-edit"
+            onClick={() => onEdit(task)}
+            aria-label={`Edit task ${task.title}`}
+          >
+            Edit Task
+          </button>
+        )}
+        {onDelete && (
+          <button
+            type="button"
+            className="btn-action btn-delete"
+            onClick={() => onDelete(task)}
+            aria-label={`Delete task ${task.title}`}
+          >
+            Delete Task
+          </button>
         )}
       </div>
     </article>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import TaskItem from './TaskItem.jsx';
 import TaskFilters from './TaskFilters.jsx';
 import Pagination from './Pagination.jsx';
-import taskService, { getTasks, ApiError } from '../../services/taskService.js';
+import { getTasks } from '../../services/taskService.js';
 
 function formatErrorMessage(error) {
   if (!error) return 'An unexpected error occurred.';
@@ -27,6 +27,8 @@ export function TaskList({
   loading: propLoading,
   error: propError,
   onRetry: propOnRetry,
+  onEditTask,
+  onDeleteTask,
 }) {
   const isControlled = propTasks !== undefined;
 
@@ -163,7 +165,12 @@ export function TaskList({
       {!loading && !error && tasks && tasks.length > 0 && (
         <div className="task-grid" role="feed" aria-label="Task list">
           {tasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              onEdit={onEditTask}
+              onDelete={onDeleteTask}
+            />
           ))}
         </div>
       )}
